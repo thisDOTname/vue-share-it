@@ -2,13 +2,13 @@
   <div class="vue-share-it-wrapper">
 
     <template v-for="(config, index) in finalConfig">
-      <a :key="`share-target-${index}`" :href="config.url" target="popup" @click="openPopUp(config)">
+      <a :key="`share-target-${index}`" :href="config.url" target="popup" @click="openPopUp(config)" :style="{ color: config.color || config.defaultColor }" :class="{ 'share-icon': config.icon, 'share-button': !config.icon, 'icon-border': config.icon && config.border, 'icon-border-round': config.icon && config.border && config.roundBorder }" >
         <div v-if="config.icon">
-          <font-awesome-icon :icon="['fab', config.icon || config.defaultIcon]" :size="config.size || 'lg'" :style="{ color: config.color || config.defaultColor }" />
+          <font-awesome-icon :icon="['fab', config.defaultIcon]" :size="config.size || 'lg'" :style="{ color: config.color || config.defaultColor }" />
         </div>
         <div v-else>
           <share-button :dark="config.dark || false" :dense="config.dense || false" :style="{ color: config.color || config.defaultColor }">
-            <font-awesome-icon :icon="['fab', config.icon || config.defaultIcon]" :size="(config.dense) ? 'lg' : config.size || 'lg'" />
+            <font-awesome-icon :icon="['fab', config.defaultIcon]" :size="(config.dense) ? 'lg' : config.size || 'lg'" />
             <label>{{ config.label || config.defaultLabel }}</label>
           </share-button>
         </div>
@@ -108,12 +108,14 @@ export default {
             baseConfig[key].platform = 'facebook';
             baseConfig[key].defaultIcon = 'facebook';
             baseConfig[key].defaultLabel = 'Facebook';
+            baseConfig[key].defaultColor = '#3b5998';
             break;
 
           case 'whatsapp':
             baseConfig[key].platform = 'whatsapp';
             baseConfig[key].defaultIcon = 'whatsapp';
             baseConfig[key].defaultLabel = 'Whatsapp';
+            baseConfig[key].defaultColor = '#25d366';
             break;
 
           default:
@@ -187,30 +189,23 @@ export default {
   display: inline-flex;
 }
 
-a.social-button {
-  display: inline-block;
-  padding: 0.35em 1.2em;
-  border: 0.1em solid #FFFFFF;
-  margin: 0 0.3em 0.3em 0;
-  border-radius: 0.12em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: 'Roboto',sans-serif;
-  font-weight: 300;
-  color: #FFFFFF;
-  text-align: center;
-  transition: all 0.2s;
+.icon-border {
+  border: 1px solid;
 }
 
-a.social-button:hover{
-  color:#000000;
-  background-color:#FFFFFF;
+.icon-border-round {
+  border-radius: 50%;
 }
-@media all and (max-width:30em){
-  a.social-button{
-    display:block;
-    margin:0.4em auto;
-  }
+
+.vue-share-it-wrapper a {
+    padding: 0.5em;
+    color: #ccc;
+    cursor: pointer;
 }
+
+.share-icon {
+  margin: 0 0.5em;
+}
+
 
 </style>
