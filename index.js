@@ -1,12 +1,12 @@
 import shareIt from './components/shareIt.vue';
 import shareButton from './components/shareButton.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTwitter, faFacebook, faWhatsapp, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faTwitter, faFacebookF, faWhatsapp, faLinkedin, faRedditAlien } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const shareItPlugin =  {
   install (Vue, options) {
-    library.add(faTwitter, faFacebook, faWhatsapp, faLinkedin);
+    library.add(faTwitter, faFacebookF, faWhatsapp, faLinkedin, faRedditAlien);
     Vue.component('font-awesome-icon', FontAwesomeIcon);
     Vue.component('share-it', shareIt);
     Vue.component('share-button', shareButton);

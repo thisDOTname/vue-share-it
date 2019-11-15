@@ -1,5 +1,13 @@
 <template>
-  <div class="vue-share-it-button" :class="{'dark': dark, 'light': !dark, 'dense': dense}">
+  <div
+    class="vue-share-it-button"
+    :class="{
+      'dark': dark,
+      'light': !dark,
+      'dense': dense,
+      'outline': outline
+    }"
+  >
     <slot></slot>
   </div>
 </template>
@@ -13,6 +21,10 @@ export default {
       default: false
     },
     dense: {
+      type: Boolean,
+      default: false
+    },
+    outline: {
       type: Boolean,
       default: false
     }
@@ -65,6 +77,11 @@ export default {
 .vue-share-it-button label {
   padding: 0 0.5em;
   cursor: pointer;
+}
+
+.outline {
+  background: #ffffff !important;
+  border: 1px solid !important;
 }
 
 </style>
