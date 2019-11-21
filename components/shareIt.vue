@@ -5,7 +5,7 @@
         :key="`share-target-${index}`"
         href="javascript:void(0)"
         target="_blank"
-        @click="openPopUp(config.url, config.platform)"
+        @click="openPopUp(config)"
         :style="{ 
           color: (!(icons || config.icon)) ? config.color || config.defaultColor : false,
           background: (config.icon && config.backgroundColor) ? config.backgroundColor : false,
@@ -77,7 +77,7 @@ export default {
     },
     url: {
       type: String,
-      default: document.location.href
+      default: ''
     },
     width: {
       type: Number,
@@ -145,16 +145,6 @@ export default {
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#1DA1F2';
             baseConfig[key].defaultIconColor = '#1DA1F2';
-            baseConfig[key].url = 'http://twitter.com/share';
-            if (this.url) {
-              baseConfig[key].url += `?url=${encodeURIComponent(this.url)}`;  
-            }
-            if (baseConfig[key].text || this.text) {
-              baseConfig[key].url += `&text=${baseConfig[key].text || this.text}`;
-            }
-            if (baseConfig[key].hashtags) {
-              baseConfig[key].url += `&hashtags=${baseConfig[key].hashtags || ''}`;
-            }
             break;
 
           case 'linkedin':
@@ -164,19 +154,6 @@ export default {
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#0077B5';
             baseConfig[key].defaultIconColor = '#0077B5';
-            baseConfig[key].url = 'https://www.linkedin.com/shareArticle?mini=true';
-            if (this.url) {
-              baseConfig[key].url += `&url=${encodeURIComponent(this.url)}`;
-            }
-            if (baseConfig[key].text || this.text) {
-              baseConfig[key].url += `&title=${baseConfig[key].text || this.text}`;
-            }
-            if (baseConfig[key].summary) {
-              baseConfig[key].url += `&summary=${baseConfig[key].summary}`;
-            }
-            if (baseConfig[key].source) {
-              baseConfig[key].url += `&source=${baseConfig[key].source}`;
-            }
             break;
 
           case 'facebook':
@@ -186,7 +163,6 @@ export default {
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#3b5998';
             baseConfig[key].defaultIconColor = '#3b5998';
-            baseConfig[key].url = `https://facebook.com/sharer.php?display=popup&u=${encodeURIComponent(this.url)}`;
             break;
 
           case 'whatsapp':
@@ -196,7 +172,6 @@ export default {
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#25d366';
             baseConfig[key].defaultIconColor = '#25d366';
-            baseConfig[key].url = `whatsapp://send?text=${baseConfig[key].text || this.text} ${encodeURIComponent(this.url)}`;
             break;
 
           case 'reddit':
@@ -206,10 +181,6 @@ export default {
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#ff4500';
             baseConfig[key].defaultIconColor = '#ff4500';
-            baseConfig[key].url = `http://www.reddit.com/submit?url=${encodeURIComponent(this.url)}`;
-            if (baseConfig[key].text || this.text) {
-              baseConfig[key].url += `&title=${baseConfig[key].text || this.text}`;
-            }
             break;
 
           default:
@@ -218,7 +189,6 @@ export default {
             baseConfig[key].defaultLabel = '';
         }
 
-        baseConfig[key].url = baseConfig[key].url;
         if (baseConfig[key].icon || vm.icons) {
           baseConfig[key].iconSize = vm.getIconSize(baseConfig[key].size || vm.iconSize || vm.defaultIconSize);
         }
@@ -227,10 +197,84 @@ export default {
     },
   },
   methods: {
-    openPopUp (url, platform) {
-      if (url) {
-        window.open( url, 'popup' , `width=${this.width},height=${this.height}` );
-        this.$emit('clicked', platform);
+    openPopUp (config) {
+      const vm = this;
+      let shareUrl = '';
+      switch (config.platform) {
+        case 'twitter':
+          shareUrl = 'http://twitter.com/share';
+          if (vm.url) {
+            shareUrl += `?url=${encodeURIComponent(vm.url)}`;  
+          } else {
+            shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
+          }
+          if (config.text || vm.text) {
+            shareUrl += `&text=${config.text || vm.text}`;
+          }
+          if (config.hashtags) {
+            shareUrl += `&hashtags=${config.hashtags || ''}`;
+          }
+          break;
+
+        case 'linkedin':
+          shareUrl = 'https://www.linkedin.com/shareArticle?mini=true';
+          if (vm.url) {
+            shareUrl += `&url=${encodeURIComponent(vm.url)}`;
+          } else {
+            shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
+          }
+          if (config.text || vm.text) {
+            shareUrl += `&title=${config.text || vm.text}`;
+          }
+          if (config.summary) {
+            shareUrl += `&summary=${config.summary || ''}`;
+          }
+          if (config.source) {
+            shareUrl += `&source=${config.source || ''}`;
+          }
+          break;
+
+        case 'facebook':
+          shareUrl = 'https://facebook.com/sharer.php?display=popup';
+          if (vm.url) {
+            shareUrl += `&u=${encodeURIComponent(vm.url)}`;
+          } else {
+            shareUrl += `&u=${encodeURIComponent(document.location.href)}`;
+          }
+          break;
+
+        case 'whatsapp':
+          shareUrl = 'whatsapp://send?text=';
+          if (config.text) {
+            shareUrl += `${config.text} `;
+          } else {
+            shareUrl += `${vm.text} `;
+          }
+          if (vm.url) {
+            shareUrl += `${encodeURIComponent(vm.url)}`;
+          } else {
+            shareUrl += `${encodeURIComponent(document.location.href)}`;
+          }
+          break;
+
+        case 'reddit':
+          shareUrl = 'http://www.reddit.com/submit';
+          if (vm.url) {
+            shareUrl += `?url=${encodeURIComponent(vm.url)}`;
+          } else {
+            shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
+          }
+          if (config.text || vm.text) {
+           shareUrl += `&title=${config.text || vm.text}`;
+          }
+          break;
+
+        default:
+          shareUrl = false;
+      }
+      if (shareUrl) {
+        window.open( shareUrl, 'popup' , `width=${vm.width},height=${vm.height}` );
+        vm.$emit('clicked', config.platform);
       }
       return false;
     },
