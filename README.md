@@ -1,3 +1,7 @@
+![Release](https://img.shields.io/npm/v/vue-share-it)
+![Vue.js](https://img.shields.io/badge/vue-2.x-brightgreen)
+![License](https://img.shields.io/npm/l/vue-share-it)
+
 # vue-share-it
 > A highly customizable Vue.js component for sharing links on social networks.
 
@@ -37,8 +41,60 @@ Vue.use(shareIt);
 **HTML**
 
 ```html
-<script src="https://unpkg.com/vue-share-it@1.0.12/dist/vue-share-it.js"></script>
+<script src="https://unpkg.com/vue-share-it@x.x.x/dist/vue-share-it.js"></script>
 ```
+
+## Supported social-media platforms
+
+|  Platform  |  Value   |
+|:----------:|:---------|
+| Twitter    | twitter  |
+| LinkedIn   | linkedin |
+| Facebook   | facebook |
+| Whatsapp   | whatsapp |
+| Reddit     | reddit   |
+|            |          |
+
+
+## API
+
+**Props**
+
+| Prop         | Data type | Default   | Description   |
+|:------------:|:---------:|:---------:|:-------------:|
+| text         | String    | ''        | Caption       |
+| url          | String    | ''        | URL to share  |
+| width        | Number    | 600       | Width of the share window      |
+| height       | Number    | 600       | Height of the share window |
+| dense        | Boolean   | false     | Dense button styling      |
+| dark         | Boolean   | false     | Dark button styling      |
+| targets      | Array     | []        | Specify social media targets, defaults to all available targets |
+| icons        | Boolean   | false     | Use icons as buttons      |
+| outline      | Boolean   | false     | Outline button styling |
+| round        | Boolean   | false     | Round button styling for icons      |
+| iconSize     | String    | lg        | Specify icon size. See [size chart](#sizeChart) below      |
+| shareConfig  | Object    | {<br>linkedin: {},<br>twitter: {},<br>facebook: {},<br>whatsapp: {},<br>reddit: {},<br>} | Advanced configuration for target specific styling      |
+|              |           |           |               |
+
+
+**Events**
+
+|    Name   |    Description                                            |    Value    |
+|:---------:|:---------------------------------------------------------:|:------------|
+| clicked   | Event that is emitted when a share button is clicked      | Returns social media platform which was clicked. E.g. ["twitter"] |
+|           |                                                           |             |
+
+**Slots**
+
+|    Name              |    Description                  |
+|:--------------------:|:-------------------------------:|
+| `${platform}-icon`   |  Custom icon for platform       |
+| `${platform}-label`  |  Custom label for platform      |
+|                      |                                 |
+
+
+
+## Examples
 
 **Using vue-share-it component**
 
@@ -76,23 +132,26 @@ Vue.use(shareIt);
 **Button configs**
 ```javascript
 const share = {
-    twitter: {
-         size: "2x",
-         label: "Tweet it!"
-    },
-    linkedin: {
-      size: "2x",
-      color: "#828282",
-      backgroundColor: "#25B89A"
-    },
-    facebook: {
-      size: "2x",
-      dark: true
-    },
-    whatsapp: {
-      size: "2x",
-      dense: true
-    },
+  twitter: {
+    size: "2x",
+    label: "Custom label!",
+    round: true,
+  },
+  linkedin: {
+    size: "2x",
+    color: "#333",
+    backgroundColor: "yellow",
+  },
+  facebook: {
+    size: "3x",
+    dark: true
+  },
+  whatsapp: {
+    size: "2x",
+    dense: true,
+    outline: true,
+    color: 'green',
+  },
 }
 ```
 ```html
@@ -116,43 +175,81 @@ const share = {
 ---
 **Icon configs**
 ```javascript
-const iconConfig = {
-    twitter: {
-      icon: true,
-      size: "xs",
-      color: "#feab6e",
-      outline: true,
-      round: true,
-      backgroundColor: 'yellow'
-    },
-    linkedin: {
-      icon: true,
-      size: "lg",
-      outline: true,
-      round: true,
-      
-    },
-    facebook: {
-      icon: true,
-      size: "2x",
-      outline: true,
-      round: true
-    },
-    whatsapp: {
-      icon: true,
-      size: "3x",
-      outline: true,
-      round: true
-    },
-    reddit: {
-      icon: true,
-      size: "4x",
-      outline: true,
-      round: true
-    },
-  }
+const iconConfig ={
+  twitter: {
+    icon: true,
+    size: "sm",
+    color: "#333",
+    round: true,
+    backgroundColor: 'yellow'
+  },
+  linkedin: {
+    icon: true,
+    size: "lg",
+    outline: true,
+    round: true,
+    
+  },
+  facebook: {
+    icon: true,
+    size: "2x",
+    outline: true,
+    round: true
+  },
+  whatsapp: {
+    icon: true,
+    size: "3x",
+    outline: true,
+    round: true
+  },
+  reddit: {
+    icon: true,
+    size: "4x",
+    outline: true,
+    round: true
+  },
+}
 ```
 ```html
 <share-it :shareConfig="iconConfig" />
 ```
 ---
+**Using slots**
+```html
+<share-it>
+  <template v-slot:twitter-icon>
+    <v-icon>mdi-twitter</v-icon>
+  </template>
+  <template v-slot:twitter-label>
+    <em>Tweet it!</em>
+  </template>
+  <template v-slot:whatsapp-icon>
+    <v-icon>mdi-whatsapp</v-icon>
+  </template>
+  <template v-slot:whatsapp-label>
+    <em>Share on Whatsapp</em>
+  </template>
+</share-it>
+```
+
+<a name="sizeChart">
+</a>
+
+**Size chart**
+
+|    Code   |    Size    |
+|:---------:|:----------:|
+| xs        | .75em      |
+| sm        | .875em     |
+| lg        | 1.33em     |
+| 2x        | 2em        |
+| 3x        | 3em        |
+| 4x        | 4em        |
+| 5x        | 5em        |
+| 6x        | 6em        |
+| 7x        | 7em        |
+| 8x        | 8em        |
+| 9x        | 9em        |
+| 10x       | 10em       |
+|           |            |
+

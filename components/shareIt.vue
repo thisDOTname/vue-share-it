@@ -16,7 +16,7 @@
           'share-icon': icons || config.icon,
           'share-button': !config.icon && !icons,
           'icon-border': (icons || config.icon) && (outline || config.outline),
-          'icon-border-round': (icons || config.icon) && (outline || config.outline) && (round || config.round)
+          'icon-border-round': (icons || config.icon) && ((outline || config.outline) || (round || config.round))
         }"
       >
         <div v-if="icons || config.icon">
@@ -36,11 +36,15 @@
               background: config.backgroundColor || config.defaultBackground
             }"
           >
-            <font-awesome-icon
-              :icon="['fab', config.defaultIcon]"
-              :size="config.size || defaultIconSize"
-            />
-            <label>{{ config.label || config.defaultLabel }}</label>
+            <slot :name="`${config.platform}-icon`">
+              <font-awesome-icon
+                :icon="['fab', config.defaultIcon]"
+                :size="config.size || defaultIconSize"
+              />
+            </slot>
+            <slot :name="`${config.platform}-label`">
+              <label>{{ config.label || config.defaultLabel }}</label>
+            </slot>
           </share-button>
         </div>
       </a>
