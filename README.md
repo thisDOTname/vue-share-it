@@ -14,9 +14,9 @@
 * SEO friendly
 
 ## Examples
-[Live demo](http://github.com)
+[Live demo](https://codesandbox.io/s/vue-share-it-examples-hsmp4)
 
-[Examples repository](http://github.com)
+[Docs](https://thisdotname.github.io/vue-share-it/)
 
 ## Installation
 
