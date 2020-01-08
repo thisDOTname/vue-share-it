@@ -1,3 +1,3 @@
 module.exports = {
-  productionSourceMap: false,
+  publicPath: '/vue-share-it/'
 };
