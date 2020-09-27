@@ -225,7 +225,7 @@ export default {
           if (vm.url) {
             shareUrl += `&url=${encodeURIComponent(vm.url)}`;
           } else {
-            shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
+            shareUrl += `&url=${encodeURIComponent(document.location.href)}`;
           }
           if (config.text || vm.text) {
             shareUrl += `&title=${config.text || vm.text}`;
