@@ -4,7 +4,6 @@
       <a
         :key="`share-target-${index}`"
         href="javascript:void(0)"
-        target="_blank"
         @click="openPopUp(config)"
         :style="{ 
           color: (!(icons || config.icon)) ? config.color || config.defaultColor : false,
