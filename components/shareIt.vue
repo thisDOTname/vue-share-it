@@ -20,7 +20,7 @@
       >
         <div v-if="icons || config.icon">
           <font-awesome-icon
-            :icon="['fab', config.defaultIcon]"
+            :icon="[(config.defaultIcon === 'envelope') ? 'fas' : 'fab', config.defaultIcon]"
             :size="config.size || iconSize || defaultIconSize"
             :style="{ color: config.color || config.defaultIconColor || config.defaultColor }"
           />
@@ -37,7 +37,7 @@
           >
             <slot :name="`${config.platform}-icon`">
               <font-awesome-icon
-                :icon="['fab', config.defaultIcon]"
+                :icon="[(config.defaultIcon === 'envelope') ? 'fas' : 'fab', config.defaultIcon]"
                 :size="config.size || defaultIconSize"
               />
             </slot>
@@ -65,6 +65,7 @@ export default {
           facebook: {},
           whatsapp: {},
           reddit: {},
+          email: {},
         }
       }
     },
@@ -186,6 +187,15 @@ export default {
             baseConfig[key].defaultIconColor = '#ff4500';
             break;
 
+          case 'email':
+            baseConfig[key].platform = 'email';
+            baseConfig[key].defaultIcon = 'fa-envelope';
+            baseConfig[key].defaultLabel = 'Email';
+            baseConfig[key].defaultColor = '#FFFFFF';
+            baseConfig[key].defaultBackground = '#333';
+            baseConfig[key].defaultIconColor = '#333';
+            break;
+
           default:
             baseConfig[key].platform = '';
             baseConfig[key].defaultIcon = '';
@@ -269,6 +279,28 @@ export default {
           }
           if (config.text || vm.text) {
            shareUrl += `&title=${config.text || vm.text}`;
+          }
+          break;
+
+        case 'email':
+          shareUrl = 'mailto:';
+
+          if (config.text || vm.text) {
+            shareUrl += `?subject=${config.text || vm.text}`;
+          } else {
+            shareUrl += `?subject=Check out this website`;
+          }
+
+          shareUrl += `&body=`;
+
+          if (config.summary) {
+            shareUrl += `${config.summary || ''}`;
+          }
+
+          if (vm.url) {
+            shareUrl += `${encodeURIComponent(vm.url)}`;
+          } else {
+            shareUrl += `${encodeURIComponent(document.location.href)}`;
           }
           break;
 
