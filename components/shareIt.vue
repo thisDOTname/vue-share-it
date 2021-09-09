@@ -19,11 +19,13 @@
         }"
       >
         <div v-if="icons || config.icon">
-          <font-awesome-icon
-            :icon="[(config.defaultIcon === 'envelope') ? 'fas' : 'fab', config.defaultIcon]"
-            :size="config.size || iconSize || defaultIconSize"
-            :style="{ color: config.color || config.defaultIconColor || config.defaultColor }"
-          />
+          <slot :name="`${config.platform}-icon`">
+            <font-awesome-icon
+              :icon="[(config.defaultIcon === 'envelope') ? 'fas' : 'fab', config.defaultIcon]"
+              :size="config.size || iconSize || defaultIconSize"
+              :style="{ color: config.color || config.defaultIconColor || config.defaultColor }"
+            />
+          </slot>
         </div>
         <div v-else>
           <share-button
@@ -189,7 +191,7 @@ export default {
 
           case 'email':
             baseConfig[key].platform = 'email';
-            baseConfig[key].defaultIcon = 'fa-envelope';
+            baseConfig[key].defaultIcon = 'envelope';
             baseConfig[key].defaultLabel = 'Email';
             baseConfig[key].defaultColor = '#FFFFFF';
             baseConfig[key].defaultBackground = '#333';
