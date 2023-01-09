@@ -224,10 +224,10 @@ export default {
             shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
           }
           if (config.text || vm.text) {
-            shareUrl += `&text=${config.text || vm.text}`;
+            shareUrl += `&text=${encodeURIComponent(config.text || vm.text)}`;
           }
           if (config.hashtags) {
-            shareUrl += `&hashtags=${config.hashtags || ''}`;
+            shareUrl += `&hashtags=${encodeURIComponent(config.hashtags || '')}`;
           }
           break;
 
@@ -239,13 +239,13 @@ export default {
             shareUrl += `&url=${encodeURIComponent(document.location.href)}`;
           }
           if (config.text || vm.text) {
-            shareUrl += `&title=${config.text || vm.text}`;
+            shareUrl += `&title=${encodeURIComponent(config.text || vm.text)}`;
           }
           if (config.summary) {
-            shareUrl += `&summary=${config.summary || ''}`;
+            shareUrl += `&summary=${encodeURIComponent(config.summary || '')}`;
           }
           if (config.source) {
-            shareUrl += `&source=${config.source || ''}`;
+            shareUrl += `&source=${encodeURIComponent(config.source || '')}`;
           }
           break;
 
@@ -261,9 +261,9 @@ export default {
         case 'whatsapp':
           shareUrl = 'whatsapp://send?text=';
           if (config.text) {
-            shareUrl += `${config.text} `;
+            shareUrl += `${encodeURIComponent(config.text)} `;
           } else {
-            shareUrl += `${vm.text} `;
+            shareUrl += `${encodeURIComponent(vm.text)} `;
           }
           if (vm.url) {
             shareUrl += `${encodeURIComponent(vm.url)}`;
@@ -280,7 +280,7 @@ export default {
             shareUrl += `?url=${encodeURIComponent(document.location.href)}`;
           }
           if (config.text || vm.text) {
-           shareUrl += `&title=${config.text || vm.text}`;
+           shareUrl += `&title=${encodeURIComponent(config.text || vm.text)}`;
           }
           break;
 
@@ -288,7 +288,7 @@ export default {
           shareUrl = 'mailto:';
 
           if (config.text || vm.text) {
-            shareUrl += `?subject=${config.text || vm.text}`;
+            shareUrl += `?subject=${encodeURIComponent(config.text || vm.text)}`;
           } else {
             shareUrl += `?subject=Check out this website`;
           }
@@ -296,13 +296,13 @@ export default {
           shareUrl += `&body=`;
 
           if (config.summary) {
-            shareUrl += `${config.summary || ''}`;
+            shareUrl += `${encodeURIComponent(config.summary || '')}`;
           }
 
           if (vm.url) {
-            shareUrl += `${encodeURIComponent(vm.url)}`;
+            shareUrl += ` ${encodeURIComponent(vm.url)}`;
           } else {
-            shareUrl += `${encodeURIComponent(document.location.href)}`;
+            shareUrl += ` ${encodeURIComponent(document.location.href)}`;
           }
           break;
 
