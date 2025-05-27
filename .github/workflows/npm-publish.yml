@@ -1,0 +1,42 @@
+name: Publish Package to NPM
+on:
+  release:
+    types: [created]
+  push:
+    branches:
+      - master
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    # Only run this job when on the master branch
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          # This line sets up authentication for npm
+          # You'll need to add NPM_TOKEN secret in your repository settings
+          # Generate a token at https://www.npmjs.com/settings/[your-username]/tokens
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      # If you have any build or test steps, add them here
+      - name: Build package
+        run: npm run build
+        
+      # Publish to npm
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          # This uses the NPM_TOKEN secret you need to set up in your repository
+          # Create this secret in your repo: Settings > Secrets and variables > Actions > New repository secret
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

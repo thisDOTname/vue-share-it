@@ -146,11 +146,11 @@ export default {
         switch (key) {
           case 'twitter':
             baseConfig[key].platform = 'twitter';
-            baseConfig[key].defaultIcon = 'twitter';
-            baseConfig[key].defaultLabel = 'Twitter';
+            baseConfig[key].defaultIcon = 'x-twitter';
+            baseConfig[key].defaultLabel = 'X';
             baseConfig[key].defaultColor = '#FFFFFF';
-            baseConfig[key].defaultBackground = '#1DA1F2';
-            baseConfig[key].defaultIconColor = '#1DA1F2';
+            baseConfig[key].defaultBackground = '#000000';
+            baseConfig[key].defaultIconColor = '#000000';
             break;
 
           case 'linkedin':

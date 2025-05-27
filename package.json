@@ -1,10 +1,11 @@
 {
     "name": "vue-share-it",
-    "version": "1.1.7",
+    "version": "1.2.0",
     "description": "A Vue.js component for sharing links to social networks",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "npx webpack"
     },
     "repository": {
         "type": "git",
@@ -26,7 +27,7 @@
     "homepage": "https://github.com/thisDOTname/vue-share-it#readme",
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^1.2.22",
-        "@fortawesome/free-brands-svg-icons": "^5.10.2",
+        "@fortawesome/free-brands-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^5.10.2",
         "@fortawesome/vue-fontawesome": "^0.1.7"
     },
